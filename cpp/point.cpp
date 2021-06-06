@@ -2,37 +2,65 @@
 #include <cmath>
 
 struct Point {
-    double x;
-    double y;
+    private:
+        double x;
+        double y;
+
+    public:
+        // Constructor (initializer)
+        Point(double x, double y) {
+            this->x = x;
+            this->y = y;
+        }
+
+        // Getters (accessors)
+        double getX() const {
+            return this->x;
+        }
+
+        double getY() const {
+            return this->y;
+        }
+
+        // Setters (mutators)
+        void setX(double value) {
+            this->x = value;
+        }
+
+        void setY(double value) {
+            this->y = value;
+        }
 };
 
-bool operator==(Point a, Point b) {
-    return a.x == b.x && a.y == b.y;
+bool operator==(const Point& a, const Point& b) {
+    return a.getX() == b.getX() && a.getX() == b.getY();
 }
 
-bool operator!=(Point a, Point b) {
+bool operator!=(const Point& a, const Point& b) {
     return !(a == b);
 }
 
-Point operator+(Point a, Point b) {
-    Point sum = {a.x + b.x, a.y + b.y};
+Point operator+(const Point& a, const Point& b) {
+    Point sum = Point(a.getX()+b.getX(), a.getY()+b.getY());
     return sum;
 }
 
 std::ostream& operator<<(std::ostream& out, const Point& p) {
-    out << '(' << p.x << ", " << p.y << ')';
+    out << '(' << p.getX() << ", " << p.getY() << ')';
     return out;
 }
 
-double pointDistance(Point a, Point b) {
-    return hypot(b.x-a.x, b.y-a.y);
+double pointDistance(const Point& a, const Point& b) {
+    return hypot(b.getX()-a.getY(), b.getX()-a.getY());
 }
 
 
 int main() {
-    Point a = {1, 1};
-    Point b = {2, 2};
+    Point a = Point(1, 1);
+    Point b = Point(2, 2);
     Point c = a + b;
+
+    a.setX(42);
 
     if ( a == b ) {
         std::cout << a << " == " << b << std::endl;
