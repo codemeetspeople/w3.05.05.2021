@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cmath>
 
-struct Point {
+class Point {
     private:
         double x;
         double y;
@@ -30,37 +30,37 @@ struct Point {
         void setY(double value) {
             this->y = value;
         }
+
+        double distance(const Point& other) const {
+            return hypot(this->x-other.x, this->y-other.y);
+        }
+
+        bool operator==(const Point& other) const {
+            return this->x == other.x && this->y == other.y;
+        }
+
+        bool operator!=(const Point& other) const {
+            return !(*this == other);
+        }
+
+        Point operator+(const Point& other) const {
+            Point sum = Point(this->x+other.x, this->y+other.y);
+            return sum;
+        }
 };
 
-bool operator==(const Point& a, const Point& b) {
-    return a.getX() == b.getX() && a.getX() == b.getY();
-}
-
-bool operator!=(const Point& a, const Point& b) {
-    return !(a == b);
-}
-
-Point operator+(const Point& a, const Point& b) {
-    Point sum = Point(a.getX()+b.getX(), a.getY()+b.getY());
-    return sum;
-}
 
 std::ostream& operator<<(std::ostream& out, const Point& p) {
     out << '(' << p.getX() << ", " << p.getY() << ')';
     return out;
 }
 
-double pointDistance(const Point& a, const Point& b) {
-    return hypot(b.getX()-a.getY(), b.getX()-a.getY());
-}
-
 
 int main() {
-    Point a = Point(1, 1);
-    Point b = Point(2, 2);
+    Point a = Point(1, 4);
+    Point b = Point(3, 2);
     Point c = a + b;
 
-    a.setX(42);
 
     if ( a == b ) {
         std::cout << a << " == " << b << std::endl;
@@ -68,7 +68,8 @@ int main() {
         std::cout << a << " != " << b << std::endl;
     }
 
-    std::cout << c << std::endl;
+    std::cout << "Distance from " << a << " to " << b << " = " << a.distance(b) << std::endl;
+
 
     return 0;
 }
